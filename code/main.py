@@ -1,5 +1,6 @@
 from settings import *
 from sys import exit
+import pygame
 
 # components
 from game import Game

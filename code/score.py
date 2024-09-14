@@ -1,10 +1,9 @@
 from settings import *
+from display_component import DisplayComponent
 
-class Score:
+class Score(DisplayComponent):
     def __init__(self):
-        self.surface = pygame.Surface((SIDEBAR_WIDTH, SCORE_HEIGHT_FRACTION * GAME_HEIGHT - PADDING))
-        self.rect = self.surface.get_rect(bottomright=(WINDOW_WIDTH - PADDING, WINDOW_HEIGHT - PADDING))
-        self.display_surface = pygame.display.get_surface()
+        super().__init__(SIDEBAR_WIDTH, SCORE_HEIGHT_FRACTION * GAME_HEIGHT - PADDING, {'bottomright': (WINDOW_WIDTH - PADDING, WINDOW_HEIGHT - PADDING)})
 
     def run(self):
-        self.display_surface.blit(self.surface, self.rect)
+        super().run()
