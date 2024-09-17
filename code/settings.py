@@ -29,3 +29,9 @@ CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 YELLOW = (255, 255, 0)
 ORANGE = (255, 165, 0)
+
+# gameboy palette
+LIGHT = (176, 191, 142)
+MID_LIGHT = (105, 133, 40)
+MID_DARK = (53, 70, 16)
+DARK = (10, 13, 3)

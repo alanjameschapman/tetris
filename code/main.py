@@ -31,7 +31,7 @@ class Main:
                     exit()
 
             # display
-            self.display_surface.fill(GRAY)
+            self.display_surface.fill(MID_DARK)
 
             # run components
             self.game.run()
