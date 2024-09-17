@@ -7,6 +7,7 @@ class DisplayComponent:
         self.surface = pygame.Surface((width, height))
         self.rect = self.surface.get_rect(**position)
         self.surface.fill(LIGHT)
+        self.sprites = pygame.sprite.Group()
 
     def run(self):
         self.display_surface.blit(self.surface, self.rect)
