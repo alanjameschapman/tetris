@@ -9,7 +9,7 @@ class Game(DisplayComponent):
         super().__init__(GAME_WIDTH, GAME_HEIGHT, {'topleft': (PADDING, PADDING)})
 
         # tetromino
-        self.tetromino = Tetromino(choice(list(TETROMINOS.keys())), self.sprites)
+        self.tetromino = Tetromino(choice(list(TETROMINOS.keys())), self.sprites, self.create_new_tetromino)
 
         # timer
         self.timers = {
@@ -18,6 +18,9 @@ class Game(DisplayComponent):
         }
         self.timers['vertical move'].activate()
 
+    def create_new_tetromino(self):
+        self.tetromino = Tetromino(choice(list(TETROMINOS.keys())), self.sprites, self.create_new_tetromino)
+    
     def timer_update(self):
         for timer in self.timers.values():
             timer.update()
@@ -37,7 +40,6 @@ class Game(DisplayComponent):
                 self.timers['horizontal move'].activate()
             # if keys[pygame.K_DOWN]:
             #     self.tetromino.move_down()
-            
 
     def run(self):
 
@@ -53,11 +55,12 @@ class Game(DisplayComponent):
         super().run()
 
 class Tetromino(pygame.sprite.Sprite):
-    def __init__(self, shape, group):
+    def __init__(self, shape, group, create_new_tetromino):
 
         # setup
         self.block_positions = TETROMINOS[shape]['shape']
         self.color = TETROMINOS[shape]['color']
+        self.create_new_tetromino = create_new_tetromino
 
         # create blocks
         self.blocks = [Block(group,pos,self.color) for pos in self.block_positions]
@@ -81,6 +84,8 @@ class Tetromino(pygame.sprite.Sprite):
         if not self.next_move_vertical_collide(self.blocks, 1):
             for block in self.blocks:
                 block.pos.y += 1
+        else:
+            self.create_new_tetromino()
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, group, pos, color):
