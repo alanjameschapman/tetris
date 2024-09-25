@@ -4,14 +4,16 @@ from random import choice
 from timer import Timer
 
 class Game(DisplayComponent):
-    def __init__(self):
+    def __init__(self, get_next_shape):
         # general
         super().__init__(GAME_WIDTH, GAME_HEIGHT, {'topleft': (PADDING, PADDING)})
 
+        # game connection
+        self.get_next_shape = get_next_shape
+
         # tetromino
         self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
-        for row in self.field_data:
-            print(row)
+
         self.tetromino = Tetromino(
             choice(list(TETROMINOS.keys())),
             self.sprites,
@@ -29,7 +31,7 @@ class Game(DisplayComponent):
     def create_new_tetromino(self):
         self.check_lines()
         self.tetromino = Tetromino(
-            choice(list(TETROMINOS.keys())),
+            self.get_next_shape(),
             self.sprites,
             self.create_new_tetromino,
             self.field_data)
