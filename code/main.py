@@ -25,11 +25,11 @@ class Main:
         # components
         self.game = Game(self.get_next_shape)
         self.score = Score()
-        self.preview = Preview(self.get_next_shape)
+        self.preview = Preview()
     
     def get_next_shape(self):
-        next_shape = self.next_shape.pop(0)
-        self.next_shape.append(choice(list(TETROMINOS.keys())))
+        next_shape = self.next_shape  # Get the next shape
+        self.next_shape = choice(list(TETROMINOS.keys()))  # Update to a new shape
         return next_shape
 
     def run(self):
@@ -47,7 +47,7 @@ class Main:
             # run components
             self.game.run()
             self.score.run()
-            self.preview.run()
+            self.preview.run(self.next_shape)
 
             # update game
             pygame.display.update()
