@@ -19,7 +19,7 @@ class Main:
         pygame.display.set_caption("Tetris")
 
         # shapes
-        self.next_shape = [choice(list(TETROMINOS.keys()))]
+        self.next_shape = choice(list(TETROMINOS.keys()))
         print(self.next_shape)
 
         # components
@@ -28,7 +28,7 @@ class Main:
         self.preview = Preview()
     
     def get_next_shape(self):
-        next_shape = self.next_shape  # Get the next shape
+        next_shape = self.next_shape
         self.next_shape = choice(list(TETROMINOS.keys()))  # Update to a new shape
         return next_shape
 

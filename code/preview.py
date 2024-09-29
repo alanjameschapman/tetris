@@ -13,7 +13,7 @@ class Preview(DisplayComponent):
 
     def display_piece(self, shape):
         shape_surface = self.shape_surfaces[shape]
-        self.surface.blit(shape_surface, shape_surface.get_rect(center=self.rect.center))
+        self.surface.blit(shape_surface, shape_surface.get_rect(center=self.surface.get_rect().center))
     
     def run(self, next_shape):
         self.surface.fill(MID_DARK)
