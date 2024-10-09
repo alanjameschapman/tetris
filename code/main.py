@@ -1,6 +1,7 @@
 from settings import *
 from sys import exit
 import pygame
+from os.path import join, dirname, realpath
 
 # components
 from game import Game
@@ -8,6 +9,7 @@ from score import Score
 from preview import Preview
 
 from random import choice
+from pygame import mixer
 
 class Main:
     def __init__(self):
@@ -23,9 +25,24 @@ class Main:
         print(self.next_shape)
 
         # components
-        self.game = Game(self.get_next_shape)
+        self.game = Game(self.get_next_shape, self.update_score)
         self.score = Score()
         self.preview = Preview()
+
+        # audio
+        # Get the absolute path to the 'sound' directory
+        base_path = dirname(realpath(__file__))  # Path to 'code' directory
+        music_path = join(base_path, '..', 'sound', 'music.wav')  # Navigate to 'sound/music.wav'
+        print(music_path)
+
+        # Load the music
+        self.music = pygame.mixer.Sound(music_path)
+        self.music.play(-1)  # Play the music indefinitely
+    
+    def update_score(self, lines, score, level):
+        self.score.lines = lines
+        self.score.score = score
+        self.score.level = level
     
     def get_next_shape(self):
         next_shape = self.next_shape

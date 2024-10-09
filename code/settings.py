@@ -36,6 +36,7 @@ MAGENTA = (255, 0, 255)
 YELLOW = (255, 255, 0)
 ORANGE = (255, 165, 0)
 PURPLE = (128, 0, 128)
+LINE_COLOR = (0, 0, 0)
 
 # gameboy palette
 LIGHT = (176, 191, 142)
@@ -53,3 +54,5 @@ TETROMINOS = {
 	'S': {'shape': [(0,0), (-1,0), (0,-1), (1,-1)], 'color': GREEN},
 	'Z': {'shape': [(0,0), (1,0), (0,-1), (-1,-1)], 'color': RED}
 }
+
+SCORE_DATA = {1: 40, 2: 100, 3: 300, 4: 1200}

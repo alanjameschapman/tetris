@@ -1,15 +1,17 @@
 from settings import *
 from display_component import DisplayComponent
 from random import choice
+from sys import exit
 from timer import Timer
 
 class Game(DisplayComponent):
-    def __init__(self, get_next_shape):
+    def __init__(self, get_next_shape, update_score):
         # general
         super().__init__(GAME_WIDTH, GAME_HEIGHT, {'topleft': (PADDING, PADDING)})
 
         # game connection
         self.get_next_shape = get_next_shape
+        self.update_score = update_score
 
         # tetromino
         self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
@@ -31,7 +33,29 @@ class Game(DisplayComponent):
         }
         self.timers['vertical move'].activate()
 
+        # score
+        self.current_level = 1
+        self.current_score = 0
+        self.current_lines = 0
+
+    def calculate_score(self, num_lines):
+        self.current_lines += num_lines
+        self.current_score += SCORE_DATA[num_lines] * self.current_level
+
+        if self.current_lines / 10 > self.current_level:
+            self.current_level += 1
+            self.down_speed *= 0.7
+            self.down_speed_faster = self.down_speed * 0.3
+            self.timers['vertical move'].duration = self.down_speed
+        self.update_score(self.current_lines, self.current_score, self.current_level)
+
+    def check_game_over(self):
+        for block in self.tetromino.blocks:
+            if block.pos.y < 0:
+                exit()
+
     def create_new_tetromino(self):
+        self.check_game_over()
         self.check_lines()
         self.tetromino = Tetromino(
             self.get_next_shape(),
@@ -99,6 +123,9 @@ class Game(DisplayComponent):
             self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
             for block in self.sprites:
                 self.field_data[int(block.pos.y)][int(block.pos.x)] = block
+
+            # update score
+            self.calculate_score(len(delete_rows))
 
     def run(self):
 
