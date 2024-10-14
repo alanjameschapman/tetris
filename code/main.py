@@ -30,13 +30,13 @@ class Main:
         self.preview = Preview()
 
         # audio
-        # Get the absolute path to the 'sound' directory
+        # music
         base_path = dirname(realpath(__file__))  # Path to 'code' directory
         music_path = join(base_path, '..', 'sound', 'music.wav')  # Navigate to 'sound/music.wav'
-        print(music_path)
 
         # Load the music
         self.music = pygame.mixer.Sound(music_path)
+        self.music.set_volume(0.1)
         self.music.play(-1)  # Play the music indefinitely
     
     def update_score(self, lines, score, level):

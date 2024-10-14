@@ -3,6 +3,8 @@ from display_component import DisplayComponent
 from random import choice
 from sys import exit
 from timer import Timer
+from os.path import join, dirname, realpath
+
 
 class Game(DisplayComponent):
     def __init__(self, get_next_shape, update_score):
@@ -38,6 +40,11 @@ class Game(DisplayComponent):
         self.current_score = 0
         self.current_lines = 0
 
+        # audio
+        base_path = dirname(realpath(__file__))
+        self.landing_sound = pygame.mixer.Sound(join(base_path, '..', 'sound', 'landing.wav'))
+        self.landing_sound.set_volume(0.2)
+
     def calculate_score(self, num_lines):
         self.current_lines += num_lines
         self.current_score += SCORE_DATA[num_lines] * self.current_level
@@ -55,6 +62,7 @@ class Game(DisplayComponent):
                 exit()
 
     def create_new_tetromino(self):
+        self.landing_sound.play()
         self.check_game_over()
         self.check_lines()
         self.tetromino = Tetromino(
