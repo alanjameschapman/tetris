@@ -11,6 +11,12 @@ class Game(DisplayComponent):
         # general
         super().__init__(GAME_WIDTH, GAME_HEIGHT, {'topleft': (PADDING, PADDING)})
 
+        # lines
+        self.line_surface = self.surface.copy()
+        self.line_surface.fill((0,255,0))
+        self.line_surface.set_colorkey((0,255,0))
+        self.line_surface.set_alpha(100)
+
         # game connection
         self.get_next_shape = get_next_shape
         self.update_score = update_score
@@ -44,6 +50,18 @@ class Game(DisplayComponent):
         base_path = dirname(realpath(__file__))
         self.landing_sound = pygame.mixer.Sound(join(base_path, '..', 'sound', 'landing.wav'))
         self.landing_sound.set_volume(0.2)
+
+    def draw_grid(self):
+
+        for col in range(1, COLUMNS):
+            x = col * CELL_SIZE
+            pygame.draw.line(self.surface, MID_DARK, (x, 0), (x, self.surface.get_height()), 1)
+
+        for row in range(1, ROWS):
+            y = row * CELL_SIZE
+            pygame.draw.line(self.surface, MID_DARK, (0, y), (self.surface.get_width(), y), 1)
+
+        self.surface.blit(self.line_surface, (0, 0))
 
     def calculate_score(self, num_lines):
         self.current_lines += num_lines
@@ -144,6 +162,8 @@ class Game(DisplayComponent):
 
         # drawing
         self.surface.fill(LIGHT)
+        self.draw_grid()
+        pygame.draw.rect(self.surface, MID_LIGHT, self.surface.get_rect(), 2, 2)
         self.sprites.draw(self.surface)
 
         super().run()
