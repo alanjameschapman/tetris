@@ -16,7 +16,6 @@ class Score(DisplayComponent):
         base_path = dirname(realpath(__file__))  # current file's directory
         font_path = join(base_path, '..', 'graphics', 'Russo_One.ttf')  # sibling directory 'graphics'
         self.font = pygame.font.Font(font_path, 30)
-        # self.font = pygame.font.SysFont('Arial', 30)
 
 		# increment
         self.increment_height = self.surface.get_height() / 3
@@ -27,19 +26,18 @@ class Score(DisplayComponent):
         self.lines = 0
 
     def display_text(self, pos, text):
-        text_surface = self.font.render(f'{text[0]}: {text[1]}', True, 'white')
+        text_surface = self.font.render(f'{text[0]}: {text[1]}', True, MID_DARK)
         text_rect = text_surface.get_rect(center = pos)
         self.surface.blit(text_surface, text_rect)
             
-
     def run(self):
         super().run()
 
-        self.surface.fill(GRAY)
+        self.surface.fill(LIGHT)
         for i, text in enumerate([('Score',self.score), ('Level', self.level), ('Lines', self.lines)]):
             x = self.surface.get_width() / 2
             y = self.increment_height / 2 + i * self.increment_height
             self.display_text((x,y), text)
 
         self.display_surface.blit(self.surface,self.rect)
-        pygame.draw.rect(self.display_surface, LINE_COLOR, self.rect, 2, 2)
+        pygame.draw.rect(self.display_surface, MID_LIGHT, self.rect, 2, 2)

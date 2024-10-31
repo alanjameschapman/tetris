@@ -16,7 +16,7 @@ class Preview(DisplayComponent):
         self.surface.blit(shape_surface, shape_surface.get_rect(center=self.surface.get_rect().center))
     
     def run(self, next_shape):
-        self.surface.fill(MID_DARK)
+        self.surface.fill(LIGHT)
         self.display_piece(next_shape)
         super().run()
         pygame.draw.rect(self.display_surface, MID_LIGHT, self.rect, 2, 2)
